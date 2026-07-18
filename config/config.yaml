@@ -1,0 +1,6 @@
+db:
+  type: sqlite
+  path: db/data.db
+
+expectations:
+  max_amount: 100000

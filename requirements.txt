@@ -1,0 +1,6 @@
+behave>=1.2.6
+pandas>=1.5
+pyyaml
+sqlalchemy
+great_expectations==0.13.36
+pytest-html
