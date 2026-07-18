@@ -1,0 +1,457 @@
+[
+{
+  "description": [
+    "Validate the `orders` table for schema, referential integrity, ranges and business rules."
+  ],
+  "elements": [
+    {
+      "keyword": "Scenario",
+      "location": "features/orders_table_validation.feature:4",
+      "name": "Orders table has expected columns",
+      "status": "passed",
+      "steps": [
+        {
+          "keyword": "Given",
+          "location": "features/orders_table_validation.feature:5",
+          "match": {
+            "arguments": [],
+            "location": "features/steps/data_steps.py:15"
+          },
+          "name": "the database is available",
+          "result": {
+            "duration": 0.0005748271942138672,
+            "status": "passed"
+          },
+          "step_type": "given"
+        },
+        {
+          "keyword": "When",
+          "location": "features/orders_table_validation.feature:6",
+          "match": {
+            "arguments": [
+              {
+                "name": "table",
+                "value": "orders"
+              }
+            ],
+            "location": "features/steps/data_steps.py:31"
+          },
+          "name": "I inspect the `orders` table schema",
+          "result": {
+            "duration": 0.0005755424499511719,
+            "status": "passed"
+          },
+          "step_type": "when"
+        },
+        {
+          "keyword": "Then",
+          "location": "features/orders_table_validation.feature:7",
+          "match": {
+            "arguments": [
+              {
+                "name": "cols",
+                "value": "order_id`, `user_id`, `amount`, `order_date`, `status"
+              }
+            ],
+            "location": "features/steps/data_steps.py:40"
+          },
+          "name": "the table should contain columns `order_id`, `user_id`, `amount`, `order_date`, `status`",
+          "result": {
+            "duration": 5.507469177246094e-05,
+            "status": "passed"
+          },
+          "step_type": "then"
+        }
+      ],
+      "tags": [],
+      "type": "scenario"
+    },
+    {
+      "keyword": "Scenario",
+      "location": "features/orders_table_validation.feature:9",
+      "name": "Order amounts are positive and within expected range",
+      "status": "passed",
+      "steps": [
+        {
+          "keyword": "Given",
+          "location": "features/orders_table_validation.feature:10",
+          "match": {
+            "arguments": [
+              {
+                "name": "table",
+                "value": "orders"
+              }
+            ],
+            "location": "features/steps/data_steps.py:22"
+          },
+          "name": "the `orders` table is loaded",
+          "result": {
+            "duration": 0.0009636878967285156,
+            "status": "passed"
+          },
+          "step_type": "given"
+        },
+        {
+          "keyword": "Then",
+          "location": "features/orders_table_validation.feature:11",
+          "match": {
+            "arguments": [
+              {
+                "name": "col",
+                "value": "amount"
+              },
+              {
+                "name": "val",
+                "original": "0",
+                "value": 0
+              }
+            ],
+            "location": "features/steps/data_steps.py:75"
+          },
+          "name": "all values in column `amount` should be greater than 0",
+          "result": {
+            "duration": 0.0003466606140136719,
+            "status": "passed"
+          },
+          "step_type": "then"
+        },
+        {
+          "keyword": "And",
+          "location": "features/orders_table_validation.feature:12",
+          "match": {
+            "arguments": [
+              {
+                "name": "col",
+                "value": "amount"
+              },
+              {
+                "name": "val",
+                "original": "100000",
+                "value": 100000
+              }
+            ],
+            "location": "features/steps/data_steps.py:80"
+          },
+          "name": "all values in column `amount` should be less than 100000",
+          "result": {
+            "duration": 0.00016570091247558594,
+            "status": "passed"
+          },
+          "step_type": "then"
+        }
+      ],
+      "tags": [],
+      "type": "scenario"
+    },
+    {
+      "keyword": "Scenario",
+      "location": "features/orders_table_validation.feature:14",
+      "name": "Referential integrity with users",
+      "status": "passed",
+      "steps": [
+        {
+          "keyword": "Given",
+          "location": "features/orders_table_validation.feature:15",
+          "match": {
+            "arguments": [
+              {
+                "name": "table",
+                "value": "orders"
+              }
+            ],
+            "location": "features/steps/data_steps.py:22"
+          },
+          "name": "the `orders` table is loaded",
+          "result": {
+            "duration": 0.0007274150848388672,
+            "status": "passed"
+          },
+          "step_type": "given"
+        },
+        {
+          "keyword": "Then",
+          "location": "features/orders_table_validation.feature:16",
+          "match": {
+            "arguments": [
+              {
+                "name": "col",
+                "value": "user_id"
+              },
+              {
+                "name": "table2",
+                "value": "orders"
+              }
+            ],
+            "location": "features/steps/data_steps.py:85"
+          },
+          "name": "every `user_id` in `orders` must exist in `users`",
+          "result": {
+            "duration": 0.0011699199676513672,
+            "status": "passed"
+          },
+          "step_type": "then"
+        }
+      ],
+      "tags": [],
+      "type": "scenario"
+    },
+    {
+      "keyword": "Scenario",
+      "location": "features/orders_table_validation.feature:18",
+      "name": "Order status values are within allowed set",
+      "status": "passed",
+      "steps": [
+        {
+          "keyword": "Given",
+          "location": "features/orders_table_validation.feature:19",
+          "match": {
+            "arguments": [
+              {
+                "name": "table",
+                "value": "orders"
+              }
+            ],
+            "location": "features/steps/data_steps.py:22"
+          },
+          "name": "the `orders` table is loaded",
+          "result": {
+            "duration": 0.0009398460388183594,
+            "status": "passed"
+          },
+          "step_type": "given"
+        },
+        {
+          "keyword": "Then",
+          "location": "features/orders_table_validation.feature:20",
+          "match": {
+            "arguments": [],
+            "location": "features/steps/data_steps.py:95"
+          },
+          "name": "all `status` values should be one of `completed`, `shipped`, `cancelled`, `pending`",
+          "result": {
+            "duration": 0.0005915164947509766,
+            "status": "passed"
+          },
+          "step_type": "then"
+        }
+      ],
+      "tags": [],
+      "type": "scenario"
+    }
+  ],
+  "keyword": "Feature",
+  "location": "features/orders_table_validation.feature:1",
+  "name": "Orders table data quality",
+  "status": "passed",
+  "tags": []
+},
+
+{
+  "description": [
+    "Validate the `users` table for schema, uniqueness, nulls and business rules."
+  ],
+  "elements": [
+    {
+      "keyword": "Scenario",
+      "location": "features/users_table_validation.feature:4",
+      "name": "Users table has expected columns",
+      "status": "passed",
+      "steps": [
+        {
+          "keyword": "Given",
+          "location": "features/users_table_validation.feature:5",
+          "match": {
+            "arguments": [],
+            "location": "features/steps/data_steps.py:15"
+          },
+          "name": "the database is available",
+          "result": {
+            "duration": 0.0004658699035644531,
+            "status": "passed"
+          },
+          "step_type": "given"
+        },
+        {
+          "keyword": "When",
+          "location": "features/users_table_validation.feature:6",
+          "match": {
+            "arguments": [
+              {
+                "name": "table",
+                "value": "users"
+              }
+            ],
+            "location": "features/steps/data_steps.py:31"
+          },
+          "name": "I inspect the `users` table schema",
+          "result": {
+            "duration": 0.00041103363037109375,
+            "status": "passed"
+          },
+          "step_type": "when"
+        },
+        {
+          "keyword": "Then",
+          "location": "features/users_table_validation.feature:7",
+          "match": {
+            "arguments": [
+              {
+                "name": "cols",
+                "value": "user_id`, `email`, `name`, `signup_date"
+              }
+            ],
+            "location": "features/steps/data_steps.py:40"
+          },
+          "name": "the table should contain columns `user_id`, `email`, `name`, `signup_date`",
+          "result": {
+            "duration": 4.9591064453125e-05,
+            "status": "passed"
+          },
+          "step_type": "then"
+        }
+      ],
+      "tags": [],
+      "type": "scenario"
+    },
+    {
+      "keyword": "Scenario",
+      "location": "features/users_table_validation.feature:9",
+      "name": "Emails are not null and unique",
+      "status": "passed",
+      "steps": [
+        {
+          "keyword": "Given",
+          "location": "features/users_table_validation.feature:10",
+          "match": {
+            "arguments": [
+              {
+                "name": "table",
+                "value": "users"
+              }
+            ],
+            "location": "features/steps/data_steps.py:22"
+          },
+          "name": "the `users` table is loaded",
+          "result": {
+            "duration": 0.0006353855133056641,
+            "status": "passed"
+          },
+          "step_type": "given"
+        },
+        {
+          "keyword": "Then",
+          "location": "features/users_table_validation.feature:11",
+          "match": {
+            "arguments": [
+              {
+                "name": "col",
+                "value": "email"
+              }
+            ],
+            "location": "features/steps/data_steps.py:47"
+          },
+          "name": "no values in column `email` should be null",
+          "result": {
+            "duration": 0.00019097328186035156,
+            "status": "passed"
+          },
+          "step_type": "then"
+        },
+        {
+          "keyword": "And",
+          "location": "features/users_table_validation.feature:12",
+          "match": {
+            "arguments": [
+              {
+                "name": "col",
+                "value": "email"
+              }
+            ],
+            "location": "features/steps/data_steps.py:52"
+          },
+          "name": "values in column `email` should be unique",
+          "result": {
+            "duration": 0.00014281272888183594,
+            "status": "passed"
+          },
+          "step_type": "then"
+        }
+      ],
+      "tags": [],
+      "type": "scenario"
+    },
+    {
+      "keyword": "Scenario",
+      "location": "features/users_table_validation.feature:14",
+      "name": "Signup dates are reasonable",
+      "status": "passed",
+      "steps": [
+        {
+          "keyword": "Given",
+          "location": "features/users_table_validation.feature:15",
+          "match": {
+            "arguments": [
+              {
+                "name": "table",
+                "value": "users"
+              }
+            ],
+            "location": "features/steps/data_steps.py:22"
+          },
+          "name": "the `users` table is loaded",
+          "result": {
+            "duration": 0.000640869140625,
+            "status": "passed"
+          },
+          "step_type": "given"
+        },
+        {
+          "keyword": "Then",
+          "location": "features/users_table_validation.feature:16",
+          "match": {
+            "arguments": [
+              {
+                "name": "col",
+                "value": "signup_date"
+              }
+            ],
+            "location": "features/steps/data_steps.py:57"
+          },
+          "name": "all `signup_date` values should be parseable as dates",
+          "result": {
+            "duration": 0.00020170211791992188,
+            "status": "passed"
+          },
+          "step_type": "then"
+        },
+        {
+          "keyword": "And",
+          "location": "features/users_table_validation.feature:17",
+          "match": {
+            "arguments": [
+              {
+                "name": "col",
+                "value": "signup_date"
+              }
+            ],
+            "location": "features/steps/data_steps.py:68"
+          },
+          "name": "no `signup_date` should be in the future",
+          "result": {
+            "duration": 0.00021123886108398438,
+            "status": "passed"
+          },
+          "step_type": "then"
+        }
+      ],
+      "tags": [],
+      "type": "scenario"
+    }
+  ],
+  "keyword": "Feature",
+  "location": "features/users_table_validation.feature:1",
+  "name": "Users table data quality",
+  "status": "passed",
+  "tags": []
+}
+]

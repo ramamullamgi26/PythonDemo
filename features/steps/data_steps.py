@@ -2,7 +2,14 @@ from behave import given, when, then
 from utils.db_connection import get_connection
 import pandas as pd
 from datetime import datetime, date
-import great_expectations as ge
+
+# Great Expectations may be incompatible with some Python versions; import lazily
+ge = None
+try:
+    import great_expectations as _ge
+    ge = _ge
+except Exception:
+    ge = None
 
 
 @given('the database is available')
@@ -32,7 +39,7 @@ def step_inspect_schema(context, table):
 
 @then('the table should contain columns `{cols}`')
 def step_table_columns(context, cols):
-    expected = [c.strip() for c in cols.split(',')]
+    expected = [c.strip().strip("`\"' ") for c in cols.split(',')]
     missing = [c for c in expected if c not in context.columns]
     assert not missing, f"Missing columns: {missing}"
 

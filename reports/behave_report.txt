@@ -1,0 +1,37 @@
+Feature: Orders table data quality # features/orders_table_validation.feature:1
+  Validate the `orders` table for schema, referential integrity, ranges and business rules.
+  Scenario: Orders table has expected columns                                                     # features/orders_table_validation.feature:4
+    Given the database is available                                                               # features/steps/data_steps.py:15
+    When I inspect the `orders` table schema                                                      # features/steps/data_steps.py:31
+    Then the table should contain columns `order_id`, `user_id`, `amount`, `order_date`, `status` # features/steps/data_steps.py:40
+
+  Scenario: Order amounts are positive and within expected range  # features/orders_table_validation.feature:9
+    Given the `orders` table is loaded                            # features/steps/data_steps.py:22
+    Then all values in column `amount` should be greater than 0   # features/steps/data_steps.py:75
+    And all values in column `amount` should be less than 100000  # features/steps/data_steps.py:80
+
+  Scenario: Referential integrity with users               # features/orders_table_validation.feature:14
+    Given the `orders` table is loaded                     # features/steps/data_steps.py:22
+    Then every `user_id` in `orders` must exist in `users` # features/steps/data_steps.py:85
+
+  Scenario: Order status values are within allowed set                                       # features/orders_table_validation.feature:18
+    Given the `orders` table is loaded                                                       # features/steps/data_steps.py:22
+    Then all `status` values should be one of `completed`, `shipped`, `cancelled`, `pending` # features/steps/data_steps.py:95
+
+Feature: Users table data quality # features/users_table_validation.feature:1
+  Validate the `users` table for schema, uniqueness, nulls and business rules.
+  Scenario: Users table has expected columns                                        # features/users_table_validation.feature:4
+    Given the database is available                                                 # features/steps/data_steps.py:15
+    When I inspect the `users` table schema                                         # features/steps/data_steps.py:31
+    Then the table should contain columns `user_id`, `email`, `name`, `signup_date` # features/steps/data_steps.py:40
+
+  Scenario: Emails are not null and unique          # features/users_table_validation.feature:9
+    Given the `users` table is loaded               # features/steps/data_steps.py:22
+    Then no values in column `email` should be null # features/steps/data_steps.py:47
+    And values in column `email` should be unique   # features/steps/data_steps.py:52
+
+  Scenario: Signup dates are reasonable                        # features/users_table_validation.feature:14
+    Given the `users` table is loaded                          # features/steps/data_steps.py:22
+    Then all `signup_date` values should be parseable as dates # features/steps/data_steps.py:57
+    And no `signup_date` should be in the future               # features/steps/data_steps.py:68
+
